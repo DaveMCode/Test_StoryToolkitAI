@@ -1,0 +1,47 @@
+name: Build Executable
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      # Step 4: Install ffmpeg
+      - name: Install ffmpeg
+        run: choco install ffmpeg -y
+
+      # Step 5: Build the executable with PyInstaller
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile --add-binary "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg/bin/ffmpeg.exe;." __main__.py
+
+      # Step 6: Upload the executable as an artifact
+      - name: Upload executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: Executable
+          path: dist/your_script.exe
