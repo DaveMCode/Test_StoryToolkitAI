@@ -37,7 +37,7 @@ jobs:
       # Step 5: Build the executable with PyInstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile --add-binary "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg/bin/ffmpeg.exe;." __main__.py
+          pyinstaller --onefile --add-binary "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg/bin/ffmpeg.exe;." storytoolkitai/__main__.py
 
       # Step 6: Upload the executable as an artifact
       - name: Upload executable
