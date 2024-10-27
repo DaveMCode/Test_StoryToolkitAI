@@ -18,10 +18,10 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 2: Set up Python
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -30,16 +30,12 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      # Step 4: Install ffmpeg
-      - name: Install ffmpeg
-        run: choco install ffmpeg -y
-
-      # Step 5: Build the executable with PyInstaller
+      # Step 4: Build the executable with PyInstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile --add-binary "C:/ProgramData/chocolatey/lib/ffmpeg/tools/ffmpeg/bin/ffmpeg.exe;." storytoolkitai/__main__.py
+          pyinstaller --onefile storytoolkitai/__main__.py
 
-      # Step 6: Upload the executable as an artifact
+      # Step 5: Upload the executable as an artifact
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
